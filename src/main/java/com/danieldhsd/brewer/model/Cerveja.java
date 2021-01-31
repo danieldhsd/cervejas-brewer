@@ -6,10 +6,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Cerveja {
 	
-	@NotBlank
+	@NotBlank(message = "SKU é obrigátorio")
 	private String sku;
 	
-	@NotBlank
+	@NotBlank(message = "Nome é obrigátorio")
 	private String nome;
 	
 	@Size(max = 50)
