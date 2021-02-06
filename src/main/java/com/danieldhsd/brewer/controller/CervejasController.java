@@ -16,6 +16,7 @@ public class CervejasController {
 
 	@RequestMapping("/cervejas/novo")
 	public String novo(Cerveja cerveja) {
+		System.out.println("Executando");
 		return "cerveja/CadastroCerveja";
 	}
 	
