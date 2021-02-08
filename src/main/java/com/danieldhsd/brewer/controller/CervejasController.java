@@ -15,12 +15,16 @@ import com.danieldhsd.brewer.enumeration.Origem;
 import com.danieldhsd.brewer.enumeration.Sabor;
 import com.danieldhsd.brewer.model.Cerveja;
 import com.danieldhsd.brewer.repository.Estilos;
+import com.danieldhsd.brewer.service.CadastroCervejaService;
 
 @Controller
 public class CervejasController {
 
 	@Autowired
 	private Estilos estilos;
+	
+	@Autowired
+	private CadastroCervejaService cadastroCervejaService;
 	
 	@RequestMapping("/cervejas/novo")
 	public ModelAndView novo(Cerveja cerveja) {
@@ -40,6 +44,7 @@ public class CervejasController {
 		}
 		
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
+		cadastroCervejaService.salvar(cerveja);
 		return new ModelAndView("redirect:/cervejas/novo");
 	}
 }
