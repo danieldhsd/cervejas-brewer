@@ -26,7 +26,7 @@ public class CervejasController {
 	@Autowired
 	private CadastroCervejaService cadastroCervejaService;
 	
-	@RequestMapping("/cervejas/novo")
+	@RequestMapping(path = "/cervejas/novo")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
@@ -36,7 +36,7 @@ public class CervejasController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
+	@RequestMapping(path = "/cervejas/novo", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model,
 			RedirectAttributes attributes) {
 		if(result.hasErrors()) {
