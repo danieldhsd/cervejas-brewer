@@ -18,6 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.danieldhsd.brewer.enumeration.Origem;
 import com.danieldhsd.brewer.enumeration.Sabor;
+import com.danieldhsd.brewer.validation.SKU;
 
 @Entity
 @Table(name = "cerveja")
@@ -27,6 +28,7 @@ public class Cerveja {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@SKU
 	@NotBlank(message = "SKU é obrigátorio")
 	private String sku;
 	
