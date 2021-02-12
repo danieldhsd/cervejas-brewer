@@ -48,7 +48,7 @@
 						<select id="estilo" class="form-control" th:field="*{estilo}">
 							<option value="">Selecione o estilo</option>
 							<option th:each="estilo : ${estilos}" th:value="${estilo.codigo}"
-									th:text="${estilo.nome}"/>
+									th:text="${estilo.nome}">Pale</option>
 						</select>
 						
 						<div class="bw-field-action__icon">
@@ -126,6 +126,10 @@
 	
 	<div th:replace="estilo/CadastroRapidoEstilo :: modal"></div>
 </section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/estilo.cadastro-rapido.js}"></script>
+</th:block>
 
 </body>
 </html>
