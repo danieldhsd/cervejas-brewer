@@ -1,4 +1,4 @@
-package com.danieldhsd.brewer.converter;
+package com.danieldhsd.brewer.controller.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.StringUtils;

@@ -28,7 +28,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.danieldhsd.brewer.controller.CervejasController;
-import com.danieldhsd.brewer.converter.EstiloConverter;
+import com.danieldhsd.brewer.controller.converter.EstiloConverter;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
