@@ -29,6 +29,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.danieldhsd.brewer.controller.CervejasController;
 import com.danieldhsd.brewer.controller.converter.EstiloConverter;
+import com.danieldhsd.brewer.thymeleaf.BrewerDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -46,9 +47,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 				.parameterName("mediaType")
 				.ignoreAcceptHeader(false)
 				.useJaf(false)
-				.defaultContentType(MediaType.TEXT_HTML)
-				.mediaType("xml", MediaType.APPLICATION_XML)
-				.mediaType("json", MediaType.APPLICATION_JSON);
+				.defaultContentType(MediaType.TEXT_HTML);
 	 }
 	 
 	@Override
@@ -71,6 +70,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		engine.setTemplateResolver(templateResolver());
 		
 		engine.addDialect(new LayoutDialect());
+		engine.addDialect(new BrewerDialect());
 		return engine;
 	}
 
