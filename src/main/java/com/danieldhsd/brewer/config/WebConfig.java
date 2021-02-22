@@ -43,12 +43,13 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.favorPathExtension(false)
-				.favorParameter(true)
-				.parameterName("mediaType")
-				.ignoreAcceptHeader(false)
-				.useJaf(false)
-				.defaultContentType(MediaType.TEXT_HTML);
-	 }
+					.favorParameter(true)
+					.parameterName("mediaType")
+				    .useJaf(false)
+					.defaultContentType(MediaType.TEXT_HTML)
+					.mediaType("html", MediaType.TEXT_HTML)
+					.mediaType("json", MediaType.APPLICATION_JSON);
+	}
 	 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

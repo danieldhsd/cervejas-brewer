@@ -31,7 +31,7 @@ Brewer.EstiloCadastroRapido = (function() {
 	function onBotaoSalvarClick() {
 		var nomeEstilo = this.inputNomeEstilo.val().trim();
 		$.ajax({
-			url: this.url,
+			url: this.url + '?mediaType=json',
 			method: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify({ nome: nomeEstilo }),
