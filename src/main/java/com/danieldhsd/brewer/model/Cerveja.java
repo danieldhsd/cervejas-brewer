@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import com.danieldhsd.brewer.enumeration.Origem;
 import com.danieldhsd.brewer.enumeration.Sabor;
@@ -192,5 +193,9 @@ public class Cerveja {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	
+	public String getFotoOuMock() {
+		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
 	}
 }
