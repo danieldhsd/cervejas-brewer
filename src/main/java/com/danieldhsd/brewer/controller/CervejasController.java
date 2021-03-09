@@ -17,6 +17,7 @@ import com.danieldhsd.brewer.enumeration.Sabor;
 import com.danieldhsd.brewer.model.Cerveja;
 import com.danieldhsd.brewer.repository.Cervejas;
 import com.danieldhsd.brewer.repository.Estilos;
+import com.danieldhsd.brewer.repository.filter.CervejaFilter;
 import com.danieldhsd.brewer.service.CadastroCervejaService;
 
 @Controller
@@ -55,13 +56,13 @@ public class CervejasController {
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar() {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult bindingResult) {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCervejas");
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
 		
-		mv.addObject("cervejas", cervejas.findAll());
+		mv.addObject("cervejas", cervejas.filtrar(cervejaFilter));
 		return mv;
 	}
 }
