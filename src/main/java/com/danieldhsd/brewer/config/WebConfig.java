@@ -31,6 +31,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import com.danieldhsd.brewer.controller.CervejasController;
 import com.danieldhsd.brewer.controller.converter.EstiloConverter;
 import com.danieldhsd.brewer.thymeleaf.BrewerDialect;
+import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -74,6 +75,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		
 		engine.addDialect(new LayoutDialect());
 		engine.addDialect(new BrewerDialect());
+		engine.addDialect(new DataAttributeDialect());
 		return engine;
 	}
 
