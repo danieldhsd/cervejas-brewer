@@ -14,6 +14,7 @@ import com.danieldhsd.brewer.model.Usuario;
 import com.danieldhsd.brewer.repository.Grupos;
 import com.danieldhsd.brewer.service.CadastroUsuarioService;
 import com.danieldhsd.brewer.service.exception.EmailJaCadastradoException;
+import com.danieldhsd.brewer.service.exception.SenhaObrigatoriaUsuarioException;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -42,6 +43,10 @@ public class UsuariosController {
 			
 		} catch (EmailJaCadastradoException e) {
 			result.rejectValue("email", e.getMessage(), e.getMessage());
+			return novo(usuario);
+
+		} catch (SenhaObrigatoriaUsuarioException e) {
+			result.rejectValue("senha", e.getMessage(), e.getMessage());
 			return novo(usuario);
 		}
 		
