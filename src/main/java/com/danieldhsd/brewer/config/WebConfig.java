@@ -40,6 +40,7 @@ import com.danieldhsd.brewer.controller.CervejasController;
 import com.danieldhsd.brewer.controller.converter.CidadeConverter;
 import com.danieldhsd.brewer.controller.converter.EstadoConverter;
 import com.danieldhsd.brewer.controller.converter.EstiloConverter;
+import com.danieldhsd.brewer.controller.converter.GrupoConverter;
 import com.danieldhsd.brewer.thymeleaf.BrewerDialect;
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 import com.google.common.cache.CacheBuilder;
@@ -111,6 +112,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		conversionService.addConverter(new EstiloConverter());
 		conversionService.addConverter(new CidadeConverter());
 		conversionService.addConverter(new EstadoConverter());
+		conversionService.addConverter(new GrupoConverter());
 		
 		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
