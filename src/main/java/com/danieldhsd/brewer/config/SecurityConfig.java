@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
+			.antMatchers("/javascripts/**")
+			.antMatchers("/stylesheets/**")
 			.antMatchers("/layout/**")
 			.antMatchers("/images/**");
 	}
@@ -43,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 				.loginPage("/login")
 				.permitAll()
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage("/403")
 				.and()
 			.csrf().disable();
 	}
