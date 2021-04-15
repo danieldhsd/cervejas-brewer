@@ -26,6 +26,7 @@ import com.danieldhsd.brewer.enumeration.TipoPessoa;
 import com.danieldhsd.brewer.model.validation.ClienteGroupSequenceProvider;
 import com.danieldhsd.brewer.model.validation.group.CnpjGroup;
 import com.danieldhsd.brewer.model.validation.group.CpfGroup;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "cliente")
@@ -57,6 +58,7 @@ public class Cliente implements Serializable {
 	@Email(message = "E-mail inválido")
 	private String email;
 
+	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 	
