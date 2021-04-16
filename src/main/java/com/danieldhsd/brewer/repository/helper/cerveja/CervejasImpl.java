@@ -1,5 +1,7 @@
 package com.danieldhsd.brewer.repository.helper.cerveja;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.danieldhsd.brewer.dto.CervejaDTO;
 import com.danieldhsd.brewer.model.Cerveja;
 import com.danieldhsd.brewer.repository.filter.CervejaFilter;
 import com.danieldhsd.brewer.repository.paginacao.PaginacaoUtil;
@@ -48,38 +51,49 @@ public class CervejasImpl implements CervejasQueries {
 	}
 	
 	private void adicionarFiltro(CervejaFilter filtro, Criteria criteria) {
-		if (filtro != null) {
-			if (!StringUtils.isEmpty(filtro.getSku())) {
-				criteria.add(Restrictions.eq("sku", filtro.getSku()));
-			}
-			
-			if (!StringUtils.isEmpty(filtro.getNome())) {
-				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-			}
+		if (filtro == null) {
+			return;
+		}
+		
+		if (!StringUtils.isEmpty(filtro.getSku())) {
+			criteria.add(Restrictions.eq("sku", filtro.getSku()));
+		}
+		
+		if (!StringUtils.isEmpty(filtro.getNome())) {
+			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
+		}
 
-			if (isEstiloPresente(filtro)) {
-				criteria.add(Restrictions.eq("estilo", filtro.getEstilo()));
-			}
+		if (isEstiloPresente(filtro)) {
+			criteria.add(Restrictions.eq("estilo", filtro.getEstilo()));
+		}
 
-			if (filtro.getSabor() != null) {
-				criteria.add(Restrictions.eq("sabor", filtro.getSabor()));
-			}
+		if (filtro.getSabor() != null) {
+			criteria.add(Restrictions.eq("sabor", filtro.getSabor()));
+		}
 
-			if (filtro.getOrigem() != null) {
-				criteria.add(Restrictions.eq("origem", filtro.getOrigem()));
-			}
+		if (filtro.getOrigem() != null) {
+			criteria.add(Restrictions.eq("origem", filtro.getOrigem()));
+		}
 
-			if (filtro.getValorDe() != null) {
-				criteria.add(Restrictions.ge("valor", filtro.getValorDe()));
-			}
+		if (filtro.getValorDe() != null) {
+			criteria.add(Restrictions.ge("valor", filtro.getValorDe()));
+		}
 
-			if (filtro.getValorAte() != null) {
-				criteria.add(Restrictions.le("valor", filtro.getValorAte()));
-			}
+		if (filtro.getValorAte() != null) {
+			criteria.add(Restrictions.le("valor", filtro.getValorAte()));
 		}
 	}
 	
 	private boolean isEstiloPresente(CervejaFilter filtro) {
 		return filtro.getEstilo() != null && filtro.getEstilo().getCodigo() != null;
+	}
+	
+	public List<CervejaDTO> porSkuOuNome(String skuOuNome) {
+		String jpql = "select new com.danieldhsd.brewer.dto.CervejaDTO(codigo, sku, nome, origem, valor, foto) "
+				+ "from Cerveja where lower(sku) like lower(:skuOuNome) or lower(nome) like lower(:skuOuNome)";
+		
+		return manager.createQuery(jpql, CervejaDTO.class)
+						.setParameter("skuOuNome", skuOuNome + "%")
+						.getResultList();
 	}
 }
