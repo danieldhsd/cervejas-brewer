@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt"
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
 <head>
 	<meta charset="UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -27,7 +25,6 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-
 <body>
 	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 	<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
@@ -51,6 +48,9 @@
 	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/bootstrap-datepicker.pt-BR.min.js}"></script>
 	
+	<script th:src="@{/javascripts/vendors/numeral.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/pt-br.min.js}"></script>
+
 	<script th:src="@{/javascripts/brewer.js}"></script>
 	
 	<th:block layout:fragment="javascript-extra"></th:block>
