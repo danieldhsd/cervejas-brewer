@@ -1,4 +1,4 @@
-package com.danieldhsd.brewer.venda;
+package com.danieldhsd.brewer.session;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.danieldhsd.brewer.model.Cerveja;
-import com.danieldhsd.brewer.session.TabelaItensVenda;
 
 public class TabelaItensVendaTest {
 
@@ -16,7 +15,7 @@ private TabelaItensVenda tabelaItensVenda;
 	
 	@Before
 	public void setUp() {
-		this.tabelaItensVenda = new TabelaItensVenda();
+		this.tabelaItensVenda = new TabelaItensVenda("1");
 	}
 	
 	@Test

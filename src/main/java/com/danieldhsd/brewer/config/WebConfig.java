@@ -43,7 +43,7 @@ import com.danieldhsd.brewer.controller.converter.CidadeConverter;
 import com.danieldhsd.brewer.controller.converter.EstadoConverter;
 import com.danieldhsd.brewer.controller.converter.EstiloConverter;
 import com.danieldhsd.brewer.controller.converter.GrupoConverter;
-import com.danieldhsd.brewer.session.TabelaItensVenda;
+import com.danieldhsd.brewer.session.TabelasItensSession;
 import com.danieldhsd.brewer.thymeleaf.BrewerDialect;
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 import com.google.common.cache.CacheBuilder;
@@ -51,7 +51,7 @@ import com.google.common.cache.CacheBuilder;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
-@ComponentScan(basePackageClasses = { CervejasController.class, TabelaItensVenda.class })
+@ComponentScan(basePackageClasses = { CervejasController.class, TabelasItensSession.class })
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableCaching
