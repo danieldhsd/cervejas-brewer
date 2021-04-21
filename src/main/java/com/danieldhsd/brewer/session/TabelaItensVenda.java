@@ -25,9 +25,7 @@ public class TabelaItensVenda {
 	}
 	
 	public void adicionarItem(Cerveja cerveja, Integer quantidade) {
-		Optional<ItemVenda> itemVendaOptional = itens.stream()
-				.filter(i -> i.getCerveja().equals(cerveja))
-				.findAny();
+		Optional<ItemVenda> itemVendaOptional = buscarItemPorCerveja(cerveja);
 		
 		ItemVenda itemVenda = null;
 		if(itemVendaOptional.isPresent()) {
@@ -43,6 +41,11 @@ public class TabelaItensVenda {
 		}
 		
 	}
+	
+	public void alterarQuantidadeItens(Cerveja cerveja, Integer quantidade) {
+		ItemVenda itemVenda = buscarItemPorCerveja(cerveja).get();
+		itemVenda.setQuantidade(quantidade);
+	}
 
 	public int total() {
 		return itens.size();
@@ -50,5 +53,11 @@ public class TabelaItensVenda {
 	
 	public List<ItemVenda> getItens() {
 		return itens;
+	}
+	
+	private Optional<ItemVenda> buscarItemPorCerveja(Cerveja cerveja) {
+		return itens.stream()
+				.filter(i -> i.getCerveja().equals(cerveja))
+				.findAny();
 	}
 }
