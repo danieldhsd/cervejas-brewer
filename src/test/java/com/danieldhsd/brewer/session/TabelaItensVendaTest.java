@@ -11,7 +11,7 @@ import com.danieldhsd.brewer.model.Cerveja;
 
 public class TabelaItensVendaTest {
 
-private TabelaItensVenda tabelaItensVenda;
+	private TabelaItensVenda tabelaItensVenda;
 	
 	@Before
 	public void setUp() {
