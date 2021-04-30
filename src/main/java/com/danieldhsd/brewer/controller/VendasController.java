@@ -26,6 +26,7 @@ import com.danieldhsd.brewer.controller.page.PageWrapper;
 import com.danieldhsd.brewer.controller.validator.VendaValidator;
 import com.danieldhsd.brewer.enumeration.StatusVenda;
 import com.danieldhsd.brewer.enumeration.TipoPessoa;
+import com.danieldhsd.brewer.mail.Mailer;
 import com.danieldhsd.brewer.model.Cerveja;
 import com.danieldhsd.brewer.model.Venda;
 import com.danieldhsd.brewer.repository.Cervejas;
@@ -53,6 +54,9 @@ public class VendasController {
 	
 	@Autowired
 	private Vendas vendas;
+	
+	@Autowired
+	private Mailer mailer;
 	
 	@InitBinder("venda")
 	public void inicializarValidador(WebDataBinder binder) {
@@ -111,6 +115,7 @@ public class VendasController {
 		}
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
+		mailer.enviar();
 		
 		cadastroVendaService.salvar(venda);
 		attributes.addFlashAttribute("mensagem", "Venda salva e e-mail enviado");
