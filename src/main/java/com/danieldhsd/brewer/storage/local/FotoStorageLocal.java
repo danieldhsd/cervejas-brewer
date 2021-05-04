@@ -20,6 +20,7 @@ import net.coobird.thumbnailator.name.Rename;
 public class FotoStorageLocal implements FotoStorage {
 
 	private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.class);
+	private static final String THUMBNAIL_PREFIX = "thumbnail.";
 	
 	private Path local;
 	private Path localTemporario;
@@ -81,15 +82,21 @@ public class FotoStorageLocal implements FotoStorage {
 			throw new RuntimeException("Erro lendo a foto", e);
 		}
 	}
+	
+	@Override
+	public byte[] recuperarThumbnail(String fotoCerveja) {
+		return recuperar(THUMBNAIL_PREFIX + fotoCerveja);
+	}
 
-	private String renomearArquivo(String nomeOriginal) {
-		String novoNome = UUID.randomUUID().toString() + "_" + nomeOriginal;
-		
-		if (logger.isDebugEnabled()) {
-			logger.debug(String.format("Nome original: %s, novo nome: %s", nomeOriginal, novoNome));
+	@Override
+	public void excluir(String foto) {
+		try {
+			Files.deleteIfExists(this.local.resolve(foto));
+			Files.deleteIfExists(this.local.resolve(THUMBNAIL_PREFIX + foto));
+		} catch (IOException e) {
+			logger.warn(String.format("Erro apagando foto '%s'. Mensagem: %s", foto, e.getMessage()));
 		}
 		
-		return novoNome;
 	}
 	
 	private void criarPastas() {
@@ -107,9 +114,15 @@ public class FotoStorageLocal implements FotoStorage {
 			throw new RuntimeException("Erro criando pasta para salvar foto", e);
 		}
 	}
-
-	@Override
-	public byte[] recuperarThumbnail(String fotoCerveja) {
-		return recuperar("thumbnail." + fotoCerveja);
+	
+	private String renomearArquivo(String nomeOriginal) {
+		String novoNome = UUID.randomUUID().toString() + "_" + nomeOriginal;
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Nome original: %s, novo nome: %s", nomeOriginal, novoNome));
+		}
+		
+		return novoNome;
 	}
+	
 }

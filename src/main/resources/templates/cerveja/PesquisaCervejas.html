@@ -67,8 +67,7 @@
 					<div>
 	  					<th:block th:each="origem : ${origens}">
 	  						<div class="radio  radio-inline">
-		    					<input th:id="|id_${origem}|" type="radio" th:value="${origem}" name="origem"
-		    						th:field="*{origem}"/>
+		    					<input th:id="|id_${origem}|" type="radio" th:value="${origem}" th:field="*{origem}"/>
 		    					<label th:for="|id_${origem}|" th:text="${origem.descricao}">Nacional</label>
 	    					</div>
 	  					</th:block>
@@ -82,11 +81,9 @@
 				<div class="col-sm-6  form-group">
 					<label for="valorDe">Valor unitário</label>
 					<div class="form-inline">
-						<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorDe"
-							th:field="*{valorDe}"/>
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorDe" th:field="*{valorDe}"/>
 						<label for="valorAte" class="aw-form-label-between">até</label>
-						<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorAte"
-							th:field="*{valorAte}"/>
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-decimal" id="valorAte" th:field="*{valorAte}"/>
 					</div>
 				</div>
 			</div>
@@ -123,10 +120,12 @@
 						<td th:text="${cerveja.origem.descricao}">Internacional</td>
 						<td class="text-right" th:text="|R$ ${cerveja.valor}|">R$ 8.00</td>
 						<td class="text-center">
-							<a class="btn  btn-link  btn-xs" title="Editar"> 
+							<a class="btn  btn-link  btn-xs  js-tooltip" title="Editar"> 
 								<i class="glyphicon glyphicon-pencil"></i>
 							</a>
-							<a class="btn  btn-link  btn-xs" title="Excluir">
+							<a class="btn  btn-link  btn-xs  js-tooltip  js-exclusao-btn" title="Excluir" href="#" 
+									data:url="@{/cervejas/{codigo}(codigo=${cerveja.codigo})}"
+									data:objeto="${cerveja.nome}">
 								<i class="glyphicon glyphicon-remove"></i>
 							</a>
 						</td>
