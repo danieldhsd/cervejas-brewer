@@ -45,39 +45,37 @@ public class CervejasController {
 	
 	@Autowired
 	private Cervejas cervejas;
-	
-	@RequestMapping(path = "/novo")
-	public ModelAndView novo(Cerveja cerveja) {
+
+	@RequestMapping("/nova")
+	public ModelAndView nova(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("origens", Origem.values());
-		
 		return mv;
 	}
 	
-	@RequestMapping(path = "/novo", method = RequestMethod.POST)
-	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model,
-			RedirectAttributes attributes) {
-		if(result.hasErrors()) {
-			return novo(cerveja);
+	@RequestMapping(value = { "/nova", "{\\d+}" }, method = RequestMethod.POST)
+	public ModelAndView salvar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
+			return nova(cerveja);
 		}
 		
-		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
 		cadastroCervejaService.salvar(cerveja);
-		return new ModelAndView("redirect:/cervejas/novo");
+		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
+		return new ModelAndView("redirect:/cervejas/nova");
 	}
 	
 	@GetMapping
-	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult bindingResult, 
-			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result
+			, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCervejas");
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("sabores", Sabor.values());
 		mv.addObject("origens", Origem.values());
 		
-		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejas.filtrar(cervejaFilter, pageable),
-																httpServletRequest);
+		PageWrapper<Cerveja> paginaWrapper = new PageWrapper<>(cervejas.filtrar(cervejaFilter, pageable)
+				, httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
 	}
@@ -95,5 +93,12 @@ public class CervejasController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Cerveja cerveja) {
+		ModelAndView mv = nova(cerveja);
+		mv.addObject(cerveja);
+		return mv;
 	}
 }
