@@ -25,18 +25,25 @@ public class CadastroUsuarioService {
 	@Transactional
 	public void salvar(Usuario usuario) {
 		Optional<Usuario> usuarioExistente = usuarios.findByEmail(usuario.getEmail());
-		
-		if(usuarioExistente.isPresent())
+		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
 			throw new EmailJaCadastradoException("E-mail já cadastrado");
-		
-		if(usuario.isNovo() && StringUtils.isEmpty(usuario.getSenha()))
-			throw new SenhaObrigatoriaUsuarioException("Senha é obrigatória para novo usuário");
-		
-		if(usuario.isNovo()) {
-			usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
-			usuario.setConfirmacaoSenha(usuario.getSenha());
 		}
-
+		
+		if (usuario.isNovo() && StringUtils.isEmpty(usuario.getSenha())) {
+			throw new SenhaObrigatoriaUsuarioException("Senha é obrigatória para novo usuário");
+		}
+		
+		if (usuario.isNovo() || !StringUtils.isEmpty(usuario.getSenha())) {
+			usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
+		} else if (StringUtils.isEmpty(usuario.getSenha())) {
+			usuario.setSenha(usuarioExistente.get().getSenha());
+		}
+		usuario.setConfirmacaoSenha(usuario.getSenha());
+		
+		if (!usuario.isNovo() && usuario.getAtivo() == null) {
+			usuario.setAtivo(usuarioExistente.get().getAtivo());
+		}
+		
 		usuarios.save(usuario);
 	}
 	
