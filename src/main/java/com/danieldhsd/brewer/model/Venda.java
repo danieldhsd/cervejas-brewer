@@ -23,10 +23,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.danieldhsd.brewer.enumeration.StatusVenda;
 
 @Entity
 @Table(name = "venda")
+@DynamicUpdate
 public class Venda {
 
 	@Id
@@ -210,6 +213,14 @@ public class Venda {
 				.add(Optional.ofNullable(valorFrete).orElse(BigDecimal.ZERO))
 				.subtract(Optional.ofNullable(valorDesconto).orElse(BigDecimal.ZERO));
 		return valorTotal;
+	}
+	
+	public boolean isSalvarPermitido() {
+		return !status.equals(StatusVenda.CANCELADA);
+	}
+	
+	public boolean isSalvarProibido() {
+		return !isSalvarPermitido();
 	}
 
 	public Long getDiasCriacao() {
