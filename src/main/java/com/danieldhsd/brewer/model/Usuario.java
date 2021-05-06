@@ -123,7 +123,7 @@ public class Usuario implements Serializable {
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

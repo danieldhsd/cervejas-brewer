@@ -2,6 +2,8 @@ package com.danieldhsd.brewer.service;
 
 import java.util.Optional;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.util.StringUtils;
 import com.danieldhsd.brewer.model.Usuario;
 import com.danieldhsd.brewer.repository.Usuarios;
 import com.danieldhsd.brewer.service.exception.EmailJaCadastradoException;
+import com.danieldhsd.brewer.service.exception.ImpossivelExcluirEntidadeException;
 import com.danieldhsd.brewer.service.exception.SenhaObrigatoriaUsuarioException;
 
 @Service
@@ -46,9 +49,19 @@ public class CadastroUsuarioService {
 		
 		usuarios.save(usuario);
 	}
-	
+
 	@Transactional
 	public void alterarStatus(Long[] codigos, StatusUsuario statusUsuario) {
 		statusUsuario.executar(codigos, usuarios);
+	}
+
+	@Transactional
+	public void excluir(Usuario usuario) {
+		try {
+			this.usuarios.delete(usuario);
+			this.usuarios.flush();
+		} catch (PersistenceException e) {
+			throw new ImpossivelExcluirEntidadeException("Impossível apagar usuário.");
+		}
 	}
 }

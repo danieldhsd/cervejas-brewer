@@ -131,6 +131,10 @@ public class Cliente implements Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public boolean isNovo() {
+		return this.codigo == null;
+	}
 
 	@Override
 	public int hashCode() {

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:data="http://www.thymeleaf.org/extras/data"
 	xmlns:brewer="http://brewer.algaworks.com"
 	layout:decorate="~{layout/LayoutPadrao}">
-	
+
 <head>
 	<title>Cadastro de cliente</title>
 </head>
 
 <section layout:fragment="conteudo">
+
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10">
-					<h1>Cadastro de cliente</h1>
+					<h1 th:if="${cliente.novo}">Cadastro de cliente</h1>
+					<h1 th:unless="${cliente.novo}" th:text="|Edição de ${cliente.nome}|">Edição de cliente</h1>
 				</div>
 			
 				<div class="col-sm-2">
@@ -28,28 +30,31 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container-fluid">
-		<form method="POST" th:object="${cliente}" th:action="@{/clientes/novo}">
+		<form method="POST" th:object="${cliente}" 
+				th:action="${cliente.novo} ? @{/clientes/novo} : @{/clientes/{codigo}(codigo=${cliente.codigo})}">
 			<brewer:message/>
 			
+			<input type="hidden" th:field="*{codigo}" /> 
+			
 			<div class="row">
-				<div class="form-group col-sm-12  bw-required" brewer:classforerror="nome">
+				<div class="form-group  col-sm-12  bw-required" brewer:classforerror="nome">
 					<label for="nome" class="control-label">Nome</label>
-					<input id="nome" type="text" class="form-control" autofocus="autofocus" th:field="*{nome}"/>
+					<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{nome}"/>
 				</div>
 			</div>
 			
 			<div class="row">
-				<div class="form-group  col-sm-4 bw-required" brewer:classforerror="tipoPessoa">
+				<div class="form-group  col-sm-4  bw-required" brewer:classforerror="tipoPessoa">
 					<label class="control-label">Tipo pessoa</label> 
 					<div>
 						<th:block th:each="tipoPessoa : ${tiposPessoa}">
 							<div class="radio  radio-inline">
 								<input type="radio" th:id="|id_${tipoPessoa}|" class="js-radio-tipo-pessoa" 
 									th:field="*{tipoPessoa}" th:value="${tipoPessoa}" 
-									data:documento="${tipoPessoa.documento}" data:mascara="${tipoPessoa.mascara}">
-								<label class="control-label" th:for="|id_${tipoPessoa}|" th:text="${tipoPessoa.descricao}"></label>
+									data:documento="${tipoPessoa.documento}" data:mascara="${tipoPessoa.mascara}"> 
+								<label class="control-label" th:for="|id_${tipoPessoa}|" th:text="${tipoPessoa.descricao}">Física</label>
 							</div>
 						</th:block>
 					</div>
@@ -62,7 +67,7 @@
 			</div>
 			
 			<div class="row">
-				<div class="form-group col-sm-4">
+				<div class="form-group  col-sm-4">
 					<label for="telefone">Telefone</label>
 					<input type="text" class="form-control  js-phone-number" id="telefone" th:field="*{telefone}"/>
 				</div>
@@ -118,7 +123,7 @@
 				</div>
 			</div>
 			
-			<button type="submit" class="btn  btn-primary">Salvar</button>	
+			<button type="submit" class="btn  btn-primary">Salvar</button>				
 		</form>
 	</div>
 </section>
