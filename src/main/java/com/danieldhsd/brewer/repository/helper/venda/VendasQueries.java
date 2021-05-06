@@ -9,4 +9,6 @@ import com.danieldhsd.brewer.repository.filter.VendaFilter;
 public interface VendasQueries {
 
 	public Page<Venda> filtrar(VendaFilter filtro, Pageable pageable);
+	
+	public Venda buscarComItens(Long codigo);
 }
