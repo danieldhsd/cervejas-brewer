@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.danieldhsd.brewer.controller.page.PageWrapper;
 import com.danieldhsd.brewer.controller.validator.VendaValidator;
 import com.danieldhsd.brewer.dto.VendaMes;
+import com.danieldhsd.brewer.dto.VendaOrigem;
 import com.danieldhsd.brewer.enumeration.StatusVenda;
 import com.danieldhsd.brewer.enumeration.TipoPessoa;
 import com.danieldhsd.brewer.mail.Mailer;
@@ -175,8 +176,8 @@ public class VendasController {
 	}
 	
 	@PostMapping(value = "/nova", params = "cancelar")
-	public ModelAndView cancelar(Venda venda, BindingResult result
-				, RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+	public ModelAndView cancelar(Venda venda, BindingResult result, 
+			RedirectAttributes attributes, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
 		try {
 			cadastroVendaService.cancelar(venda);
 		} catch (AccessDeniedException e) {
@@ -190,6 +191,11 @@ public class VendasController {
 	@GetMapping("/totalPorMes")
 	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
 		return vendas.totalPorMes();
+	}
+	
+	@GetMapping("/porOrigem")
+	public @ResponseBody List<VendaOrigem> vendasPorNacionalidade() {
+		return vendas.totalPorOrigem();
 	}
 	
 	private ModelAndView mvTabelaItensVenda(String uuid) {
