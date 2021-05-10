@@ -1,5 +1,6 @@
 package com.danieldhsd.brewer.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.danieldhsd.brewer.controller.page.PageWrapper;
 import com.danieldhsd.brewer.controller.validator.VendaValidator;
+import com.danieldhsd.brewer.dto.VendaMes;
 import com.danieldhsd.brewer.enumeration.StatusVenda;
 import com.danieldhsd.brewer.enumeration.TipoPessoa;
 import com.danieldhsd.brewer.mail.Mailer;
@@ -182,6 +185,11 @@ public class VendasController {
 		
 		attributes.addFlashAttribute("mensagem", "Venda cancelada com sucesso");
 		return new ModelAndView("redirect:/vendas/" + venda.getCodigo());
+	}
+	
+	@GetMapping("/totalPorMes")
+	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
+		return vendas.totalPorMes();
 	}
 	
 	private ModelAndView mvTabelaItensVenda(String uuid) {
